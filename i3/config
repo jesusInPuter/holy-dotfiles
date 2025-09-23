@@ -1,0 +1,132 @@
+# ── Core ────────────────────────────────────────────────────────────────
+set $mod Mod4                   
+font pango:monospace 10             
+
+# ── Spawning ──────────────────────────────────────────────────────────
+bindsym $mod+Return exec kitty     
+bindsym $mod+Q kill                 
+bindsym $mod+D exec rofi -show drun 
+bindsym $mod+S exec kitty -e yazi 
+
+
+# ── Window Modes ───────────────────────────────────────────────────────
+bindsym $mod+F fullscreen toggle      
+bindsym $mod+Shift+F floating toggle 
+
+# ── Navigation (Vim-style) ─────────────────────────────────────────────
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+
+
+bar {
+    status_command i3status
+    position bottom
+    mode hide
+    hidden_state hide
+    tray_output primary
+    tray_padding 6
+
+    # Font & aesthetics
+    font pango:JetBrainsMono Nerd Font Mono 8
+    separator_symbol ""
+
+    # Colors — enchanted forest palette
+    colors {
+        background #0f1a14   # deep forest floor
+        statusline #e6f0e6   # pale mist text
+        separator  #88c0a0   # jade divider
+
+        # Workspace states as woodland glyphs
+        focused_workspace  #a3be8c #0f1a14 #ffffff   # 🌲 active grove
+        active_workspace   #81a1c1 #0f1a14 #e6f0e6   # 🌊 flowing river
+        inactive_workspace #4c566a #0f1a14 #7c8a85   # 🪵 resting logs
+        urgent_workspace   #bf616a #0f1a14 #ffffff   # 🍄 poisonous shroom
+        binding_mode       #ebcb8b #0f1a14 #ffffff   # 🔔 golden bell
+    }
+}
+
+# ── Moving Windows ──────────────────────────────────────────────────────
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# ── Splits ─────────────────────────────────────────────────────────────
+bindsym $mod+b split v             
+bindsym $mod+v split h              
+
+for_window [class=".*"] border none
+
+# ── Workspaces ──────────────────────────────────────────────────────────
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+
+# ── System Control ──────────────────────────────────────────────────────
+bindsym $mod+Shift+r restart      
+bindsym $mod+Shift+e exit        
+
+# ── Daemons & Services ───────────────────────────────────
+# Network
+exec --no-startup-id nm-applet  
+
+# Compositor
+exec --no-startup-id picom --config ~/.config/picom/picom.conf
+
+# Notifications
+exec --no-startup-id dunst     
+
+# Audio
+exec --no-startup-id pulseaudio --start
+# Volume control applet (launch manually if conflicts)
+# exec --no-startup-id volumeicon
+
+# Bluetooth
+exec --no-startup-id blueman-applet           
+
+# Screenshots
+exec --no-startup-id flameshot 
+
+# Wallpaper
+exec --no-startup-id feh --bg-scale ~/Pictures/wallpaperfla.jpg
+
+# Automount drives
+exec --no-startup-id udiskie -t                 
+
+# Keymaps & security
+exec --no-startup-id setxkbmap -option caps:escape
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg
+
+# ── Screenshots Keybindings ─────────────────────────────────────────────
+bindsym Print exec --no-startup-id bash -c "flameshot gui -c -p /tmp && notify-send 'Screenshot' 'Copied to clipboard'"
+bindsym $mod+Print exec --no-startup-id bash -c "flameshot full -c -p ~/Pictures/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Full screen saved & copied'"
+bindsym Shift+Print exec --no-startup-id bash -c "flameshot window -c -p ~/Pictures/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Window saved & copied'"
