@@ -33,18 +33,16 @@ bar {
     font pango:JetBrainsMono Nerd Font Mono 8
     separator_symbol ""
 
-    # Colors — enchanted forest palette
     colors {
         background #0f1a14   # deep forest floor
         statusline #e6f0e6   # pale mist text
         separator  #88c0a0   # jade divider
 
-        # Workspace states as woodland glyphs
-        focused_workspace  #a3be8c #0f1a14 #ffffff   # 🌲 active grove
-        active_workspace   #81a1c1 #0f1a14 #e6f0e6   # 🌊 flowing river
-        inactive_workspace #4c566a #0f1a14 #7c8a85   # 🪵 resting logs
-        urgent_workspace   #bf616a #0f1a14 #ffffff   # 🍄 poisonous shroom
-        binding_mode       #ebcb8b #0f1a14 #ffffff   # 🔔 golden bell
+        focused_workspace  #a3be8c #0f1a14 #ffffff   
+        active_workspace   #81a1c1 #0f1a14 #e6f0e6  
+        inactive_workspace #4c566a #0f1a14 #7c8a85  
+        urgent_workspace   #bf616a #0f1a14 #ffffff   
+        binding_mode       #ebcb8b #0f1a14 #ffffff  
     }
 }
 
@@ -107,7 +105,6 @@ exec --no-startup-id dunst
 
 # Audio
 exec --no-startup-id pulseaudio --start
-# Volume control applet (launch manually if conflicts)
 # exec --no-startup-id volumeicon
 
 # Bluetooth
