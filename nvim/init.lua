@@ -31,31 +31,8 @@ end
 require "lazy_setup"
 require "polish"
 
-local function ensure_cmake_configured()
-  local build_dir = "build"
-  local compile_json = build_dir .. "/compile_commands.json"
-  if vim.fn.isdirectory(build_dir) == 0 or vim.fn.filereadable(compile_json) == 0 then
-    vim.cmd("!cmake -S . -B " .. build_dir .. " -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
-    vim.cmd("!ln -sf " .. compile_json .. " ./compile_commands.json")
-  end
-end
-
--- Build only
-vim.api.nvim_create_user_command("Build", function()
-  ensure_cmake_configured()
-  vim.cmd("!cmake --build build")
-end, {})
-
--- Build and run default target (main)
-vim.api.nvim_create_user_command("BR", function()
-  ensure_cmake_configured()
-  vim.cmd("!cmake --build build && ./build/main")
-end, {})
-
 -- Keymaps
-vim.keymap.set("n", "<leader>b", ":Build<CR>", { silent = false })
-vim.keymap.set("n", "<leader>r", ":BR<CR>", { silent = false })
-vim.keymap.set("n", "<leader>dd", ":DevdocsOpenFloat<CR>", { silent = true })
+vim.keymap.set("n", "<leader>dd", ":DevdocsOpenCurrentFloat<CR>", { silent = true })
 
 vim.opt.termguicolors = true
 vim.opt.showtabline = 0
