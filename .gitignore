@@ -7,7 +7,7 @@
 *.cache
 *.undo
 *.backup
-
+pavucontrol.ini 
 .gsd-keyboard.settings-ported
 alacritty /
 blender/
