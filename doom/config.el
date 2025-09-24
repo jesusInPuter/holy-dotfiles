@@ -7,6 +7,9 @@
 (setq doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
 (setq doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 18))
 
+(use-package! elcord
+  :config
+  (elcord-mode))
 ;; -----------------------------
 ;; Theme
 ;; -----------------------------
