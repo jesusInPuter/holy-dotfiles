@@ -78,3 +78,38 @@ conform.setup({
 }) -- install without yarn or npm
 vim.g.vimtex_view_method = 'zathura'
 vim.g.vimtex_compiler_method = 'latexmk'
+
+-- Warnings
+local show_warnings = true
+
+function ToggleWarnings()
+  show_warnings = not show_warnings
+  vim.diagnostic.config({
+    virtual_text = {
+      severity = show_warnings and nil or { min = vim.diagnostic.severity.ERROR },
+    },
+    signs = {
+      severity = show_warnings and nil or { min = vim.diagnostic.severity.ERROR },
+    },
+    underline = {
+      severity = show_warnings and nil or { min = vim.diagnostic.severity.ERROR },
+    },
+  })
+end
+
+vim.keymap.set("n", "<leader>tw", ToggleWarnings, { desc = "Toggle Warnings" })
+
+-- Enable inlay hints on attach
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(args)
+    if not (args.data and args.data.client_id) then
+      return
+    end
+
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+    end
+  end,
+})
