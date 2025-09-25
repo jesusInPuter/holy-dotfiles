@@ -3,10 +3,9 @@ set $mod Mod4
 font pango:monospace 10             
 
 # ── Spawning ──────────────────────────────────────────────────────────
-bindsym $mod+Return exec kitty     
+bindsym $mod+Return exec kitty 
 bindsym $mod+Q kill                 
 bindsym $mod+D exec rofi -show drun 
-bindsym $mod+S exec kitty -e yazi 
 
 
 # ── Window Modes ───────────────────────────────────────────────────────
@@ -19,33 +18,6 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-
-
-bar {
-    status_command i3status
-    position bottom
-    mode hide
-    hidden_state hide
-    tray_output primary
-    tray_padding 6
-
-    # Font & aesthetics
-    font pango:JetBrainsMono Nerd Font Mono 8
-    separator_symbol ""
-
-    colors {
-        background #0f1a14   # deep forest floor
-        statusline #e6f0e6   # pale mist text
-        separator  #88c0a0   # jade divider
-
-        focused_workspace  #a3be8c #0f1a14 #ffffff   
-        active_workspace   #81a1c1 #0f1a14 #e6f0e6  
-        inactive_workspace #4c566a #0f1a14 #7c8a85  
-        urgent_workspace   #bf616a #0f1a14 #ffffff   
-        binding_mode       #ebcb8b #0f1a14 #ffffff  
-    }
-}
-
 # ── Moving Windows ──────────────────────────────────────────────────────
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
@@ -55,6 +27,12 @@ bindsym $mod+Shift+l move right
 # ── Splits ─────────────────────────────────────────────────────────────
 bindsym $mod+b split v             
 bindsym $mod+v split h              
+
+# ── Window focus colors ────────────────────────────────────────────────
+client.focused          #282c34 #282c34 #ffffff #00ff00 #282c34
+client.focused_inactive #282c34 #282c34 #aaaaaa #444444 #282c34
+client.unfocused        #282c34 #282c34 #888888 #444444 #282c34
+client.urgent           #900000 #900000 #ffffff #ff0000 #900000
 
 for_window [class=".*"] border none
 
@@ -122,6 +100,7 @@ exec --no-startup-id udiskie -t
 # Keymaps & security
 exec --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg
+
 
 # ── Screenshots Keybindings ─────────────────────────────────────────────
 bindsym Print exec --no-startup-id bash -c "flameshot gui -c -p /tmp && notify-send 'Screenshot' 'Copied to clipboard'"
