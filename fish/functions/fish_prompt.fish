@@ -1,1 +1,0 @@
-/home/jesus/.local/share/omf/themes/tweetjay/fish_prompt.fish
