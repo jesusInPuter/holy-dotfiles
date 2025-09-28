@@ -17,7 +17,7 @@ __pycache__/
 !/README.md
 !/starship.toml
 !/systemmonitorrc
-
+!/README.org
 
 !/atuin/
 !/atuin/**

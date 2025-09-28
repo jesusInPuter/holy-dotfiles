@@ -1,0 +1,112 @@
+#+TITLE: ✞ Holy Dotfiles
+#+DESCRIPTION: A minimal, keybinding-heavy setup for Arch Linux, centered around i3, Fish, and modal editors.
+#+AUTHOR: jesus
+#+OPTIONS: toc:2
+
+* ✞ Holy Dotfiles
+A minimal, keybinding-heavy setup for Arch Linux, centered around i3, Fish, and modal editors.
+
+[[https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png][Desktop Screenshot Placeholder]]
+
+This document provides a complete guide to deploying these configurations on a fresh Arch Linux installation.
+
+-----
+
+* Overview
+The setup process involves three main stages:
+
+1. *Dependencies:* Installing all required packages, fonts, and tools.  
+2. *Installation:* Cloning this repository and linking the configuration files.  
+3. *Finalization:* Syncing configurations and setting the default shell.  
+
+-----
+
+* Stage 1: Dependencies
+These packages must be installed before the configurations can be applied.
+
+** 1.1 Install Core Packages from Official Repositories
+This command installs the window manager, terminal, editors, shell, fonts, and various essential command-line tools:
+
+#+BEGIN_SRC bash
+sudo pacman -S --needed i3-wm kitty fish starship neovim git lazygit picom rofi thefuck tmux atuin lsd bat ripgrep fd ttf-jetbrains-mono-nerd emacs pulseaudio
+#+END_SRC
+
+** 1.2 Install an AUR Helper (yay)
+An AUR (Arch User Repository) helper is needed for packages not in the official repos:
+
+#+BEGIN_SRC bash
+sudo pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd .. && rm -rf yay
+#+END_SRC
+
+** 1.3 Install AUR Packages
+Use ~yay~ to install the remaining applications:
+
+#+BEGIN_SRC bash
+yay -S --needed superfile brave-bin
+#+END_SRC
+
+-----
+
+* Stage 2: Installation
+With the dependencies installed, you can now deploy the dotfiles.
+
+** 2.1 Clone the Dotfiles Repository
+Clone this repository into your home directory:
+
+#+BEGIN_SRC bash
+git clone https://github.com/jesusInPuter/holy-dotfiles.git ~/holy-dotfiles
+#+END_SRC
+
+** 2.2 Install the Doom Emacs Framework
+The base Doom Emacs framework must be installed before it can be configured:
+
+#+BEGIN_SRC bash
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d
+~/.emacs.d/bin/doom install
+#+END_SRC
+
+** 2.3 Link the Configuration
+This setup uses a symbolic link, which makes your system read its configuration directly from the =holy-dotfiles= repository:
+
+#+BEGIN_SRC bash
+# First, back up the default .config directory to be safe
+mv ~/.config ~/.config.bak
+
+# Create the symlink
+ln -s ~/holy-dotfiles ~/.config
+#+END_SRC
+
+-----
+
+* Stage 3: Finalization
+These final commands sync the configurations and set the shell.
+
+** 3.1 Sync Doom Emacs
+Run =doom sync= to make Doom Emacs load your personal configuration from this repository:
+
+#+BEGIN_SRC bash
+~/.emacs.d/bin/doom sync
+#+END_SRC
+
+** 3.2 Set Fish as the Default Shell
+Change your user's default login shell to Fish:
+
+#+BEGIN_SRC bash
+chsh -s /usr/bin/fish
+#+END_SRC
+
+-----
+
+* Post-Installation Checklist ✅
+- [ ] Log out and log back in to your i3 session for all changes to take effect.  
+- [ ] Launch *Neovim (nvim)* and let the plugins install automatically on the first run.  
+- [ ] Launch *Brave* and log into your necessary accounts.  
+
+-----
+
+* ✦ Finis
+Your holy setup is now complete. Step forth into the realm of minimal, keybinding-heavy glory.
