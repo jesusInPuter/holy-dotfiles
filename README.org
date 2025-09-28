@@ -3,17 +3,11 @@
 #+AUTHOR: jesus
 #+OPTIONS: toc:2
 
-* ✞ Holy Dotfiles
 A minimal, keybinding-heavy setup for Arch Linux, centered around i3, Fish, and modal editors.
-
-[[https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png][Desktop Screenshot Placeholder]]
-
-This document provides a complete guide to deploying these configurations on a fresh Arch Linux installation.
 
 -----
 
 * Overview
-The setup process involves three main stages:
 
 1. *Dependencies:* Installing all required packages, fonts, and tools.  
 2. *Installation:* Cloning this repository and linking the configuration files.  
@@ -101,12 +95,4 @@ chsh -s /usr/bin/fish
 
 -----
 
-* Post-Installation Checklist ✅
-- [ ] Log out and log back in to your i3 session for all changes to take effect.  
-- [ ] Launch *Neovim (nvim)* and let the plugins install automatically on the first run.  
-- [ ] Launch *Brave* and log into your necessary accounts.  
 
------
-
-* ✦ Finis
-Your holy setup is now complete. Step forth into the realm of minimal, keybinding-heavy glory.
