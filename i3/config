@@ -12,7 +12,7 @@ bindsym $mod+D exec rofi -show drun
 bindsym $mod+F fullscreen toggle      
 bindsym $mod+Shift+F floating toggle 
 
-# ── Navigation (Vim-style) ─────────────────────────────────────────────
+# ── Navigation ─────────────────────────────────────────────
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
@@ -82,8 +82,7 @@ exec --no-startup-id picom --config ~/.config/picom/picom.conf
 exec --no-startup-id dunst     
 
 # Audio
-exec --no-startup-id pulseaudio --start
-# exec --no-startup-id volumeicon
+# exec --no-startup-id pulseaudio --start
 
 # Bluetooth
 exec --no-startup-id blueman-applet           
@@ -92,7 +91,7 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id flameshot 
 
 # Wallpaper
-exec --no-startup-id feh --bg-scale ~/Pictures/wallpaperfla.jpg
+exec --no-startup-id feh --bg-scale ~/Pictures/wal.jpg
 
 # Automount drives
 exec --no-startup-id udiskie -t                 
