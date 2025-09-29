@@ -2,8 +2,12 @@
 
 (package! org-modern)
 
-(package! org-fragtog
-  :recipe (:host github :repo "io12/org-fragtog"))
-
+(package! org-appear)
+(package! org-fragtog)
+(package! olivetti)
+(package! org-superstar)
+(package! svg-tag-mode)
+(package! ligature) ;; optional for ligatures
+(package! exec-path-from-shell)
 (package! doom-rosepine
   :recipe (:host github :repo "Echinoidea/doom-rosepine"))
