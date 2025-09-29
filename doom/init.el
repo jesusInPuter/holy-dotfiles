@@ -119,7 +119,7 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       org               ; organize your plain life in plain text
+       (org +roam)               ; organize your plain life in plain text
        ;;(python +lsp)     ; beautiful is better than ugly
        ;;(rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;sh                ; she sells {ba,z,fi}sh shells on the C xor
