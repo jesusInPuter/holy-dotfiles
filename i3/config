@@ -105,3 +105,4 @@ exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=pkcs11,s
 bindsym Print exec --no-startup-id bash -c "flameshot gui -c -p /tmp && notify-send 'Screenshot' 'Copied to clipboard'"
 bindsym $mod+Print exec --no-startup-id bash -c "flameshot full -c -p ~/Pictures/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Full screen saved & copied'"
 bindsym Shift+Print exec --no-startup-id bash -c "flameshot window -c -p ~/Pictures/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Window saved & copied'"
+bindsym $mod+Shift+c exec --no-startup-id sh -c 'maim -s | tesseract stdin stdout -l eng | xclip -selection clipboard && notify-send "OCR Complete" "Text copied to clipboard."'
