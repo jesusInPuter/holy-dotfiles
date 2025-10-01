@@ -1,22 +1,34 @@
+(add-to-list 'exec-path "/usr/sbin")
 ;; ------------------------
 ;; 0. Frame Transparency
 ;; ------------------------
-(add-to-list 'default-frame-alist '(alpha . (0.9 . 0.9))) ; all new frames
-(set-frame-parameter (selected-frame) 'alpha '(0.9 . 0.9)) ; current frame
+(add-to-list 'default-frame-alist '(alpha . (0.8 . 0.8))) ; all new frames
+(set-frame-parameter (selected-frame) 'alpha '(0.8 . 0.8)) ; current frame
 
 ;; ------------------------
 ;; 1. Theme & Fonts
 ;; ------------------------
 (setq doom-theme 'doom-gruvbox
-      doom-font (font-spec :family "FiraCode Nerd Font" :size 16)
-      doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 16))
+      doom-font (font-spec :family "FiraCode Nerd Font" :size 19)
+      doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 17))
 
 ;; ------------------------
 ;; 2. Org Directory Setup
 ;; ------------------------
+
 (setq org-directory "~/notes")                           ; root org files
 (setq org-roam-directory (file-truename "~/notes/roam")) ; Org-roam nodes
 (setq my-notes-directory "~/notes")                      ; optional default notes dir
+
+(setq org-attach-use-id-dir t)
+(setq org-attach-id-dir "~/notes/assets/")
+
+(use-package! org-download                               ; assets for roam and main
+  :after org
+  :config
+  (setq org-download-method 'attach)
+  (setq org-download-heading-lvl nil)
+  (setq org-download-timestamp "%Y%m%d-%H%M%S_"))
 
 ;; ------------------------
 ;; 3. Org Headings Resize & Org-modern
@@ -91,39 +103,31 @@
                    (set-window-buffer new-win (current-buffer))
                    (select-window new-win))))))
 
-;; ------------------------
-;; 7. LaTeX Previews with org-fragtog
-;; ------------------------
+; ;; ------------------------
+; ;; 7. LaTeX Previews with org-fragtog (direct load, bypass .elc curse)
+; ;; ------------------------
 (setq org-preview-latex-default-process 'dvisvgm)
-(setq org-preview-latex-process-alist
-      '((dvipng :programs ("latex" "dvipng")
-                :description "dvi -> png"
-                :message "you need to install latex and dvipng"
-                :use-xcolor t
-                :image-input-type "dvi"
-                :image-output-type "png"
-                :image-size-adjust (1.0 . 1.0)
-                :latex-compiler ("latex -interaction nonstopmode -output-directory %o %f"))
-        (dvisvgm :programs ("latex" "dvisvgm")
-                 :description "dvi -> svg"
-                 :message "you need to install dvisvgm"
-                 :use-xcolor t
-                 :image-input-type "dvi"
-                 :image-output-type "svg"
-                 :image-size-adjust (1.7 . 1.5)
-                 :latex-compiler ("latex -interaction nonstopmode -output-directory %o %f"))
-        (imagemagick :programs ("latex" "convert")
-                     :description "pdf -> png"
-                     :message "you need to install imagemagick"
-                     :use-xcolor t
-                     :image-input-type "pdf"
-                     :image-output-type "png"
-                     :image-size-adjust (1.0 . 1.0)
-                     :latex-compiler ("pdflatex -interaction nonstopmode -output-directory %o %f"))))
-
-(use-package! org-fragtog
-  :hook (org-mode-hook . org-fragtog-mode))
-
+(setq org-format-latex-options
+      '(:foreground default
+        :background default
+        :scale 0.7        
+        :html-foreground "Black"
+        :html-background "Transparent"
+        :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+(defun my/org-latex-scale ()
+  "Scale LaTeX fragments relative to heading size."
+  (let ((scale (cond
+                ((org-at-heading-p)
+                 (pcase (org-current-level)
+                   (1 1.8)
+                   (2 0.6)
+                   (3 0.6)
+                   (_ 1.0)))
+                (t 1.0))))
+    (setq-local org-format-latex-options
+                (plist-put org-format-latex-options :scale scale))))
+(add-hook 'org-mode-hook 'my/org-latex-scale)
+  (add-hook 'org-mode-hook 'org-fragtog-mode)
 ;; ------------------------
 ;; 8. Exec Path
 ;; ------------------------
@@ -135,3 +139,25 @@
 ;; 9. Visual Enhancements
 ;; ------------------------
 (add-hook 'org-mode-hook 'visual-line-mode)
+(dirvish-override-dired-mode)
+(setq lsp-auto-guess-root t)
+(after! lsp-mode
+  (add-hook! 'c-mode-common-hook #'lsp-format-on-save-mode))
+
+;;==================================================
+;; CUSTOM 
+;;==================================================
+(map! :leader
+      :desc "Org-download: Insert image from clipboard"
+      "i p" #'org-download-clipboard)
+(defun wrap-region-in-src-block (lang)
+  "Wrap the active region in an Org-mode #+BEGIN_SRC ... #+END_SRC block."
+  (interactive "sLanguage: ")
+  (let ((beg (region-beginning))
+        (end (region-end)))
+    (goto-char end)
+    (insert (concat "\n#+END_SRC\n"))
+    (goto-char beg)
+    (insert (concat "#+BEGIN_SRC " lang "\n"))))
+(global-set-key (kbd "C-c w") 'wrap-region-in-src-block)
+

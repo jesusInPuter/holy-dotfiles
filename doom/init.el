@@ -28,7 +28,7 @@
        ligatures         ; ligatures and symbols to make your code pretty again
        minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
-       ;;nav-flash         ; blink cursor line after big motions
+       nav-flash         ; blink cursor line after big motions
        neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
@@ -77,7 +77,6 @@
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
-       ;;ansible
        ;;biblio            ; Writes a PhD for you (citation needed)
        ;;collab            ; buffers with friends
        ;;debugger          ; FIXME stepping through code, to help you add bugs
@@ -87,18 +86,18 @@
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        lookup            ; navigate your code and its documentation
-       ;;(lsp +eglot)      ; M-x vscode
+       (lsp +eglot)      ; M-x vscode
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
-       ;;tree-sitter       ; syntax and parsing, sitting in a tree...
+       tree-sitter       ; syntax and parsing, sitting in a tree...
 
        :lang
        ;;agda              ; types of types of types of types...
-       ;;(cc +lsp)         ; C > C++ == 1
+       (cc +lsp)         ; C > C++ == 1
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;(csharp +lsp)     ; unity, .NET, and mono shenanigans
@@ -111,19 +110,19 @@
        ;;(haskell +lsp)    ; a language that's lazier than I am
        ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
        ;;(javascript +lsp) ; all(hope(abandon(ye(who(enter(here))))))
-       ;;json              ; At least it ain't XML
-       ;;latex             ; writing papers in Emacs has never been so fun
+       json              ; At least it ain't XML
+       (latex +auctex)             ; writing papers in Emacs has never been so fun
        ;;ledger            ; be audit you can be
-       ;;lua               ; one-based indices? one-based indices
+       lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org +roam)               ; organize your plain life in plain text
-       ;;(python +lsp)     ; beautiful is better than ugly
-       ;;(rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       ;;sh                ; she sells {ba,z,fi}sh shells on the C xor
-       ;;web               ; the tubes
+       (python +lsp)     ; beautiful is better than ugly
+       (rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       sh                ; she sells {ba,z,fi}sh shells on the C xor
+       web               ; the tubes
        ;;yaml              ; JSON, but readable
 
        :config
