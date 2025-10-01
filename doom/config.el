@@ -13,6 +13,17 @@
       doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 17))
 
 ;; ------------------------
+;; Org Babel
+;; ------------------------
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((latex . t)
+   (gnuplot . t)
+   (python . t)))
+
+(setq org-confirm-babel-evaluate nil)
+
+;; ------------------------
 ;; 2. Org Directory Setup
 ;; ------------------------
 
@@ -23,18 +34,24 @@
 (setq org-attach-use-id-dir t)
 (setq org-attach-id-dir "~/notes/assets/")
 
-(use-package! org-download                               ; assets for roam and main
+(use-package! org-download
   :after org
   :config
   (setq org-download-method 'attach)
   (setq org-download-heading-lvl nil)
-  (setq org-download-timestamp "%Y%m%d-%H%M%S_"))
+  (setq org-download-timestamp "%Y%m%d-%H%M%S_")
+
+  (map! :map org-mode-map
+        :leader
+        :desc "Paste image from clipboard" "i p" #'org-download-clipboard
+        :leader
+        :desc "Yank image from URL"      "i y" #'org-download-yank))
 
 ;; ------------------------
 ;; 3. Org Headings Resize & Org-modern
 ;; ------------------------
 (after! org
-  (dolist (face '((org-level-1 . 1.35)
+ (dolist (face '((org-level-1 . 1.35)
                   (org-level-2 . 1.3)
                   (org-level-3 . 1.2)
                   (org-level-4 . 1.1)
@@ -80,6 +97,9 @@
       display-line-numbers-width-start t)
 (global-display-line-numbers-mode t)
 
+
+(after! org
+  (add-to-list 'org-latex-default-packages-alist '("" "tikz")))
 ;; ------------------------
 ;; 6. Org-roam v2
 ;; ------------------------
@@ -96,38 +116,40 @@
       '(("d" "default" plain
          "%?"
          :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t
-         :hook (lambda ()
-                 ;; Open capture in vertical split on right
-                 (let ((new-win (split-window-right)))
-                   (set-window-buffer new-win (current-buffer))
-                   (select-window new-win))))))
+         :unnarrowed t)))
 
 ; ;; ------------------------
 ; ;; 7. LaTeX Previews with org-fragtog (direct load, bypass .elc curse)
 ; ;; ------------------------
-(setq org-preview-latex-default-process 'dvisvgm)
-(setq org-format-latex-options
-      '(:foreground default
-        :background default
-        :scale 0.7        
-        :html-foreground "Black"
-        :html-background "Transparent"
-        :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
-(defun my/org-latex-scale ()
-  "Scale LaTeX fragments relative to heading size."
-  (let ((scale (cond
-                ((org-at-heading-p)
-                 (pcase (org-current-level)
-                   (1 1.8)
-                   (2 0.6)
-                   (3 0.6)
-                   (_ 1.0)))
-                (t 1.0))))
-    (setq-local org-format-latex-options
-                (plist-put org-format-latex-options :scale scale))))
-(add-hook 'org-mode-hook 'my/org-latex-scale)
+;; ------------------------
+;; Org LaTeX Preview Setup
+;; ------------------------
+(after! org
+  ;; Load required packages for LaTeX export
+  (add-to-list 'org-latex-default-packages-alist '("" "tikz" t))
+  (add-to-list 'org-latex-default-packages-alist '("" "pgfplots" t))
+  (add-to-list 'org-latex-default-packages-alist '("" "amsmath" t))
+
+  ;; Use imagemagick to preview LaTeX fragments (works with xelatex/pdf)
+  (setq org-preview-latex-default-process 'imagemagick)
+  (setq org-latex-compiler "xelatex")
+
+  ;; LaTeX PDF process for export
+  (setq org-latex-pdf-process
+        '("xelatex -interaction=nonstopmode -output-directory=%o %f"
+          "xelatex -interaction=nonstopmode -output-directory=%o %f"))
+
+  ;; Org-fragtog for auto preview on insert
   (add-hook 'org-mode-hook 'org-fragtog-mode)
+
+  ;; Scale LaTeX previews relative to headings
+  (setq org-format-latex-options
+        '(:foreground default
+          :background default
+          :scale 1.0
+          :html-foreground "Black"
+          :html-background "Transparent"
+          :matchers ("begin" "$1" "$" "$$" "\\(" "\\["))))
 ;; ------------------------
 ;; 8. Exec Path
 ;; ------------------------
@@ -142,7 +164,8 @@
 (dirvish-override-dired-mode)
 (setq lsp-auto-guess-root t)
 (after! lsp-mode
-  (add-hook! 'c-mode-common-hook #'lsp-format-on-save-mode))
+  (add-hook! 'c-mode-common-hook 'lsp-format-on-save-mode))
+(set-popup-rule! "^\\*Capture\\*" :side 'right :size 0.5 :select t)
 
 ;;==================================================
 ;; CUSTOM 
@@ -161,3 +184,30 @@
     (insert (concat "#+BEGIN_SRC " lang "\n"))))
 (global-set-key (kbd "C-c w") 'wrap-region-in-src-block)
 
+(defun my/org-set-image-width (width)
+  "Prompt for a width and apply it to the org-mode image at point.
+This version correctly handles attribute insertion without extra newlines."
+  (interactive "nWidth: ")
+  (save-excursion
+    (let* ((context (org-element-context))
+           (type (org-element-type context)))
+      (unless (eq type 'link)
+        (user-error "Not on an link"))
+      (unless (string-match-p "\\.\\(png\\|jpe?g\\|gif\\|svg\\|webp\\)$" (org-element-property :path context))
+        (user-error "Link at point is not an image"))
+
+      (beginning-of-line)
+      (if (and (re-search-backward "^#\\+ATTR_ORG:" (line-beginning-position) t)
+               (= (1+ (line-number-at-pos)) (line-number-at-pos (point-max))))
+          (if (string-match ":width [0-9]+" (match-string 0))
+              (replace-match (format ":width %d" width) t t nil 1)
+            (goto-end-of-line)
+            (insert (format " :width %d" width)))
+        (progn
+          (goto-char (org-element-property :begin context))
+          (beginning-of-line)
+          (insert (format "#+ATTR_ORG: :width %d\n" width)))))))
+
+(map! :leader
+      :after org
+      :desc "Set Org image width" "i w" #'my/org-set-image-width)

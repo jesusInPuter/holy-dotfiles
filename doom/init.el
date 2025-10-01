@@ -127,4 +127,5 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+ (setq org-latex-create-formula-image-program 'imagemagick) 
+ (default +bindings +smartparens))
