@@ -49,6 +49,7 @@ if status is-interactive
     # Editors.
     alias e 'emacs -nw'
     alias v nvim
+    alias clone 'git clone'
 
 
     # -------------------------------------------------------------------------

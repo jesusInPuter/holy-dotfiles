@@ -146,7 +146,7 @@
   (setq org-format-latex-options
         '(:foreground default
           :background default
-          :scale 1.0
+          :scale 1.3
           :html-foreground "Black"
           :html-background "Transparent"
           :matchers ("begin" "$1" "$" "$$" "\\(" "\\["))))

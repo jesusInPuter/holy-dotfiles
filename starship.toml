@@ -18,9 +18,9 @@ format = 'on [󰣇](bold cyan) '
 trim_at = "."
 disabled = false
 
-# Replace the "❯" symbol in the prompt with "➜"
-[character]                            # The name of the module we are configuring is "character"
-success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+# replace the "❯" symbol in the prompt with "➜"
+[character]                            # the name of the module we are configuring is "character"
+success_symbol = "[➜](bold green)"     # the "success_symbol" segment is being set to "➜" with the color "bold green"
 error_symbol = "[✗](bold red)"
 
 [directory]
@@ -40,11 +40,11 @@ symbol = " "
 
 [c]
 symbol = " "
-style = "149 bold" # Or whatever style you desire.
+style = "149 bold" # or whatever style you desire.
 
 [cpp]
-symbol = " "  # Using a Nerd Font icon for C++
-style = "bold #689AD6" # A common blue color for C++
+symbol = " "  # using a nerd font icon for c++
+style = "bold #689ad6" # a common blue color for c++
 
 [elixir]
 symbol = " "
