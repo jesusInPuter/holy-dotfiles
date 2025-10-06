@@ -1,81 +1,77 @@
-#format = """
-#[╭─user───❯](bold blue) $username
-#[┣─system─❯](bold yellow) $hostname
-#[┣─project❯](bold red) $directory$rust$git_branch$git_state$git_status$package$golang$terraform$docker_context$python$docker_context$nodejs
-#[╰─cmd────❯](bold green)
-#"""
-[username]
-style_user = "green bold"
-style_root = "red bold"
-format = "[$user]($style) "
-disabled = false
-show_always = true
+[aws]
+symbol = "  "
 
-[hostname]
-ssh_only = false
-format = 'on [󰣇](bold cyan) '
+[buf]
+symbol = " "
 
-trim_at = "."
-disabled = false
+[bun]
+symbol = " "
 
-# replace the "❯" symbol in the prompt with "➜"
-[character]                            # the name of the module we are configuring is "character"
-success_symbol = "[➜](bold green)"     # the "success_symbol" segment is being set to "➜" with the color "bold green"
-error_symbol = "[✗](bold red)"
+[c]
+symbol = " "
 
-[directory]
-read_only = " "
-truncation_length = 10
-truncate_to_repo = true # truncates directory to root folder if in github repo
-style = "bold italic blue"
+[cpp]
+symbol = " "
 
-[cmd_duration]
-min_time = 4
-show_milliseconds = false
-disabled = false
-style = "bold italic red"
+[cmake]
+symbol = " "
 
 [conda]
 symbol = " "
 
-[c]
-symbol = " "
-style = "149 bold" # or whatever style you desire.
+[crystal]
+symbol = " "
 
-[cpp]
-symbol = " "  # using a nerd font icon for c++
-style = "bold #689ad6" # a common blue color for c++
+[dart]
+symbol = " "
+
+[deno]
+symbol = " "
+
+[directory]
+read_only = " 󰌾"
+
+[docker_context]
+symbol = " "
 
 [elixir]
-symbol = " "
+symbol = " "
+
+[elm]
+symbol = " "
+
+[fennel]
+symbol = " "
+
+[fossil_branch]
+symbol = " "
+
+[gcloud]
+symbol = "  "
 
 [git_branch]
 symbol = " "
 
-[git_status]
-format = '([\[$all_status$ahead_behind\]]($style) )'
-stashed = "[${count}*](green)" 
-modified = "[${count}+](yellow)" 
-deleted =  "[${count}-](red)" 
-conflicted =  "[${count}~](red)" 
-ahead = "⇡${count}"
-behind = "⇣${count}"
-untracked = "[${count}?](blue)" 
-staged = "[${count}+](green)" 
-
-[git_state]
-style =	"bold red"
-format = "[$state( $progress_current/$progress_total) ]($style)"
-rebase = "rebase"
-merge = "merge"	
-revert = "revert"	
-cherry_pick = "cherry"
-bisect = "bisect"	
-am = "am"	
-am_or_rebase = "am/rebase"
+[git_commit]
+tag_symbol = '  '
 
 [golang]
 symbol = " "
+
+[guix_shell]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[hostname]
+ssh_symbol = " "
 
 [java]
 symbol = " "
@@ -83,44 +79,112 @@ symbol = " "
 [julia]
 symbol = " "
 
-[haskell]
-symbol = "λ "
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
 
 [memory_usage]
-symbol = " "
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
+
+[nim]
+symbol = "󰆥 "
 
 [nix_shell]
-symbol = " "
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CachyOS = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+Nobara = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
 
 [package]
-symbol = " "
+symbol = "󰏗 "
 
 [perl]
-symbol = " "
+symbol = " "
 
 [php]
 symbol = " "
 
+[pijul_channel]
+symbol = " "
+
+[pixi]
+symbol = "󰏗 "
+
 [python]
 symbol = " "
-format = 'via [${symbol}python (${version} )(\($virtualenv\) )]($style)'
-style = "bold yellow"
-pyenv_prefix = "venv "
-python_binary = ["./venv/bin/python", "python", "python3", "python2"]
-detect_extensions = ["py"]
-version_format = "v${raw}"
+
+[rlang]
+symbol = "󰟔 "
 
 [ruby]
-symbol = " "
+symbol = " "
 
 [rust]
-symbol = " "
+symbol = "󱘗 "
 
 [scala]
 symbol = " "
 
-[shlvl]
-symbol = " "
-
 [swift]
-symbol = "ﯣ "
+symbol = " "
+
+[zig]
+symbol = " "
+
+[gradle]
+symbol = " "

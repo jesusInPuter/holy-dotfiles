@@ -68,7 +68,7 @@ if status is-interactive
         and lsd
     end
 
-    # Interactive process killer using fzf.
+    # process killer using fzf.
     function fkill
         set -l pids (ps -ef | sed 1d | fzf -m --header="Press TAB to select multiple processes" | awk '{print $2}')
 

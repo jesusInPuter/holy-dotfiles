@@ -1,4 +1,5 @@
 ;;; packages.el -*- no-byte-compile: t; -*-
+(package! kind-icon)
 (package! hydra)
 (package! org-modern)
 (package! org-download)
