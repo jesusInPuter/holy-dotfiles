@@ -96,3 +96,53 @@ chsh -s /usr/bin/fish
 -----
 
 
+* Fixing Sound with PipeWire
+
+** 1. Install PipeWire and related packages
+#+BEGIN_SRC bash
+sudo pacman -S pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber
+#+END_SRC
+
+** 2. Remove PulseAudio to avoid conflicts
+- Confirm removal of `pulseaudio` when prompted during installation.
+
+** 3. Disable any lingering PulseAudio services
+#+BEGIN_SRC bash
+systemctl --user mask pulseaudio.socket pulseaudio.service
+systemctl --user stop pulseaudio.socket pulseaudio.service
+killall pulseaudio
+#+END_SRC
+
+** 4. Enable and start PipeWire + session manager
+#+BEGIN_SRC bash
+systemctl --user enable pipewire pipewire-pulse wireplumber
+systemctl --user start pipewire pipewire-pulse wireplumber
+#+END_SRC
+
+** 5. Verify the PipeWire sink exists
+#+BEGIN_SRC bash
+pactl list short sinks
+#+END_SRC
+
+** 6. Unmute the sink and set volume
+#+BEGIN_SRC bash
+pactl set-sink-mute <sink_index> 0
+pactl set-sink-volume <sink_index> 100%
+#+END_SRC
+
+** 7. Play test audio to wake the SUSPENDED sink
+#+BEGIN_SRC bash
+paplay /usr/share/sounds/alsa/Front_Center.wav
+# Or, if using ALSA directly:
+# aplay /usr/share/sounds/alsa/Front_Center.wav
+#+END_SRC
+
+** 8. Optional: verify services are running
+#+BEGIN_SRC bash
+systemctl --user status pipewire pipewire-pulse wireplumber
+#+END_SRC
+
+** 9. Optional: ALSA direct test through PipeWire
+#+BEGIN_SRC bash
+speaker-test -D default -c 2 -t sine
+#+END_SRC
