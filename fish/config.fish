@@ -82,9 +82,6 @@ if status is-interactive
     end
 
 
-    # -------------------------------------------------------------------------
-    # Fish Syntax Highlighting Colors
-    # -------------------------------------------------------------------------
     set -g fish_color_autosuggestion '555' 'brblack'
     set -g fish_color_cancel -r
     set -g fish_color_command --bold
@@ -107,12 +104,8 @@ if status is-interactive
     set -g fish_color_user brgreen
     set -g fish_color_valid_path --underline
 
-
-    # -------------------------------------------------------------------------
-    # : Prompt
-    # -------------------------------------------------------------------------
-
     starship init fish | source
+
 
 end
 

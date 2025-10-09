@@ -1,6 +1,8 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export --path PATH:/home/jesus/\x2econfig/emacs/bin\x1e/home/jesus/\x2econfig/emacs/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/opt/cuda/bin\x1e/opt/cuda/nsight_compute\x1e/opt/cuda/nsight_systems/bin\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl\x1e/var/lib/snapd/snap/bin
+SETUVAR --export SSH_AGENT_PID:226177
+SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXXDZk3NY/agent\x2e226176
 SETUVAR __fish_classic_git_prompt_initialized:\x1d
 SETUVAR __fish_initialized:3800
 SETUVAR _fisher_edc_2F_bass_files:\x7e/\x2econfig/fish/functions/__bass\x2epy\x1e\x7e/\x2econfig/fish/functions/bass\x2efish
